@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax</title>
+    <script src="./jquery-1.8.3.min.js"></script>
+</head>
+<body>
+    <button>$.get</button>
+    <button>$.post</button>
+    <button>$.ajax</button>
+
+    <script>
+        // $.get()发送请求
+        $('button').eq(0).click(function () {
+            //当触发单击事件时，向服务器请求数据
+            //第一个参数:请求地址
+            //第二个参数:发送的数据(可选)
+            //第三个参数：请求成功后，执行的函数
+                // data形参，用来接收服务器返回的数据
+            //第四个参数json：指定返回的数据类型，若未指定，则默认为字符串
+                //如果服务器返回的数据类型与指定的不一致，则不接收
+
+            $.get('./cgi-bin/1.py',{username:'zhangsan',age:18},function (data) {
+                console.log(data);
+            },'json')
+        });
+
+        //$.post()发送请求
+        $('button').eq(1).click(function () {
+            $.post('./cgi-bin/1.py',{username:'lisi',age:20},function (data) {
+                console.log(data);
+            },'json')
+        });
+
+        //$.ajax()发送请求
+        //直接传对象参数
+        $('button').eq(2).click(function () {
+            $.ajax({
+                url:'./cgi-bin/1.py',               //请求地址
+                type:'post',                        //请求类型
+                data:{username:'wangsu',age:80},    //请求时发送的数据
+                dataType:'json',                    //指定返回的数据类型
+                success:function (data) {           // 请求成功后调用的函数
+                    console.log(data);
+                },
+                error:function () {                 //请求失败后调用的函数
+                    console.log('请求失败!');
+                },
+                timeout:2000,                       //请求超时时间，单位毫秒ms
+                async:true                          // 异步开关，默认true
+
+
+            })
+        })
+
+    </script>
+</body>
+</html>
